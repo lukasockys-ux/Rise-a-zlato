@@ -5,7 +5,7 @@ BD.kost={n:'Kostel',ic:'⛪',w:0,c:{g:160,d:35,k:60}};
 levels20[2].push('hosp');levels20[3].push('kost');
 req20.hosp=['trh'];req20.kost=['hosp'];
 const classArt51=buildingArt;
-buildingArt=function(t){if(t==='hosp'||t==='kost')return '<img class="buildingart realistic18" src="assets/'+t+'-57.svg" alt="'+BD[t].n+'">';return classArt51(t)};
+buildingArt=function(t){if(t==='hosp'||t==='kost')return '<img class="buildingart realistic18" src="assets/'+t+'-57.svg?v=58" alt="'+BD[t].n+'">';return classArt51(t)};
 function classNeeds51(){let cities=own20(),active=t=>cities.some(p=>p.b.some(b=>b&&b.t===t&&!b.cn&&(!BD[t].w||b.w>0)));let cap=Math.max(0,...cities.map(cap20));let food=(S.r.f||0)+(S.r.grain||0)>=S.wk;let bread=active('pek')&&(active('mlyn')||(S.r.flour||0)>0);let fish=active('ryb');let tavern=active('hosp'),church=active('kost');return {food,bread,fish,tavern,church,cap,home:housing()>=S.wk};}
 function classState51(){let n=Math.max(0,Math.floor(S.wk||0)),a=S.classes51||{};let rich=Math.min(n,Math.max(0,Math.floor(a.rich||0))),town=Math.min(n-rich,Math.max(0,Math.floor(a.town||0)));return {rich,town,peasants:n-rich-town,streak:Math.max(0,Math.floor(a.streak||0)),target:a.target||0};}
 const classEnd51=endTurn;
