@@ -12,3 +12,7 @@ endTurn=function(){if(!S)return;let t=S.t,old=S.lg,forecast=calc(),prior=classSt
 function closeAlert621(){S.alerts621.shift();render()}
 const priorModal621=modal;
 modal=function(){let h=priorModal621();if(h||!S)return h;let a=S.alerts621?.[0];if(!a)return h;let c={grain:['🌾','Nedostatek jídla','Automaticky přecházíme na obilí. Spotřeba obilí se každá dvě kola zvyšuje. Obnov výrobu běžného jídla.'],famine:['🌾','Hladomor','Zajisti více jídla nebo sniž jeho spotřebu.'],wages:['🪙','Nedostatek zlata','Zajisti příjmy na žold vojska.'],unrest:['⚠️','Nepokoje obyvatel','Zkontroluj daně a potřeby obyvatel.']}[a.type];return '<div class="event46"><div class="banner46"><div style="font-size:64px">'+c[0]+'</div><h2>'+c[1]+'</h2></div><p>'+a.message+'</p><p>'+c[2]+'</p><button class="pri" onclick="closeAlert621()">Rozumím</button></div>'};
+
+/* Diagnose stalled turns without discarding pending game state. */
+const diagnosticTurn632=endTurn;
+endTurn=function(){if(!S)return;let t=S.t;try{diagnosticTurn632();if(S.t===t){render();if(!document.getElementById('ov'))alert('Diagnostika kola '+t+': '+JSON.stringify({event:S.ev?.t||null,incoming:S.inc?.length||0,end:S.end||null,perks:S.pp,quest:S.quest29?.start,alerts:S.alerts621?.length||0}));}}catch(e){console.error(e);alert('Chyba kola '+t+': '+e.message+'\n'+(e.stack||'').slice(0,900));}};
