@@ -15,3 +15,11 @@ const cardProgress635=card20;
 card20=function(p,t){let html=cardProgress635(p,t);let jobs=p.b.map((b,i)=>({b,i})).filter(x=>x.b?.t===t&&(x.b.cn||x.b.job61));if(!jobs.length)return html;let bars=jobs.map(({b,i})=>{let left=b.job61?b.job61.left:b.cn,total=b.job61?(b.job61.total||2):(b.buildTotal635||Math.max(3,left));return '<div style="font-size:11px;line-height:1.2"><small>Parcela '+(i+1)+' · '+(b.job61?'Vylepšení':'Výstavba')+'</small>'+progress61(left,total)+'</div>'}).join('');return html.replace('<div class="actions8">',bars+'<div class="actions8">')};
 const buildProgress635=build;
 build=function(i,j,t){let before=S.pv[i]?.b[j];buildProgress635(i,j,t);let b=S.pv[i]?.b[j];if(b&&b!==before&&b.cn){b.buildTotal635=b.cn;save22();render()}};
+
+const unique636=new Set(['trh','mlyn','pek','kov','hosp41','kost41','kas','sklad','slev','nastroj','pis','sk','prist','staj','tkal','skl','zbroj','vin','vcel']);
+const reasons636=buildReasons42;
+buildReasons42=function(p,t){let a=reasons636(p,t);if(unique636.has(t)&&p.b.some(b=>b?.t===t))a.push('Pouze jedna budova tohoto typu ve městě');return a};
+const build636=build;
+build=function(i,j,t){if(unique636.has(t)&&S.pv[i]?.b.some(b=>b?.t===t))return;return build636(i,j,t)};
+const card636=card20;
+card20=function(p,t){let h=card636(p,t);if(!unique636.has(t))return h;let i=p.b.findIndex(b=>b?.t===t);if(i<0)return h;let b=p.b[i],max=t==='kas'?5:3,ready=!b.cn&&!b.job61&&b.l<max&&p.o===0&&ok(sc(BD[t].c,b.l))&&(t==='kas'?cap20(p)>=b.l+1:S.lv>=(b.l===1?2:4));h=h.replace(/<button[^>]*onclick="build\([^"]*\)"[^>]*>Stavět<\/button>/,'<button '+(ready?'':'disabled')+' onclick="upg('+p.id+','+i+')">'+(b.cn?'Ve výstavbě':b.job61?'Vylepšování':b.l>=max?'Max. úroveň':'Vylepšit')+'</button>');return h};
