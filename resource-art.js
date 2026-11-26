@@ -1,0 +1,7 @@
+
+const art30={"g": "assets/resource-art-30.svg", "d": "assets/resource-art-31.svg", "k": "assets/resource-art-32.svg", "grain": "assets/resource-art-33.svg", "f": "assets/resource-art-34.svg", "i": "assets/resource-art-35.svg"};
+const labels30={g:'Zlato',d:'Dřevo',k:'Kámen',grain:'Obilí',f:'Chléb',i:'Železo'};
+const tokens30={'🪙':'g','🥇':'g','🪵':'d','🌲':'d','🪨':'k','🗿':'k','🌾':'grain','🍞':'f','⛓️':'i','⛓':'i'};
+function icon30(k){let i=document.createElement('img');i.className='resIcon30';i.src=art30[k];i.alt=labels30[k];i.title=labels30[k];return i}
+function decorate30(){let root=document.getElementById('app');if(!root)return;let walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT),nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);for(let n of nodes){if(n.parentElement.closest('svg,script,style,textarea,select'))continue;let parts=n.nodeValue.split(/(🪙|🥇|🪵|🌲|🪨|🗿|🌾|🍞|⛓️?)/gu);if(parts.length<2)continue;let f=document.createDocumentFragment();for(let x of parts)f.append(tokens30[x]?icon30(tokens30[x]):document.createTextNode(x));n.replaceWith(f)}for(let e of root.querySelectorAll('#top .res21[title]')){let k=Object.keys(labels30).find(k=>labels30[k]===e.title)||(e.title==='Jídlo'?'f':null);if(!k||e.querySelector('.resName30'))continue;let sp=e.querySelector('span');if(sp){let label=document.createElement('small');label.className='resName30';label.textContent=labels30[k];sp.prepend(label)}}}
+const oldRender30=render;render=function(){oldRender30();decorate30()};decorate30();

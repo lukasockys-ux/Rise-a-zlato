@@ -1,0 +1,1 @@
+window.addEventListener('error',function(e){var a=document.getElementById('app');if(a&&!a.querySelector('.layout21,.start21'))a.textContent='Hru nelze spustit: '+e.message;});
