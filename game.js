@@ -383,7 +383,7 @@ const render20=render;render=function(){render20();if(!S)return;let top=$('top')
 
 const assets21={"city": "assets/game-24.webp", "logo": "assets/game-25.webp", "stone": "assets/game-26.webp", "cap": "assets/game-27.webp", "map": "assets/game-28.webp"};
 document.documentElement.style.setProperty('--city21',`url(${assets21.city})`);document.documentElement.style.setProperty('--stone21',`url(${assets21.stone})`);document.documentElement.style.setProperty('--map21',`url(${assets21.map})`);
-const names21=['Havraní přístav','Skalní koruna','Mlžný průsmyk','Rudý přístav','Lesní bašta','Zlatá brána','Železný brod','Větrný záliv','Jezerní tvrz','Zlatý most','Černý kámen','Černá skála','Korunní hrad','Jelení brod','Zlaté pláně','Kovářský přístav','Bílý útes','Zelené lány','Železná hora','Sluneční vrch'];
+const names21=['Havraní přístav','Skalní koruna','Mlžný průsmyk','Rudý přístav','Lesní bašta','Zlatá brána','Železný brod','Větrný záliv','Jezerní tvrz','Zlatý most','Černý kámen','Černá skála','Korunní hrad','Jelení brod','Zlaté pláně','Kovářský přístav','Bílý útes','Zlaté pláně','Železná hora','Sluneční vrch'];
 terrain20.push('pobřeží','pláně','hory','pláně');
 // A continuous world: coastal western and eastern shores, river through central valleys.
 const pos21=[[90,80],[290,80],[500,80],[730,80],[110,200],[290,200],[500,200],[750,200],[90,320],[290,320],[500,320],[750,320],[90,440],[290,440],[500,440],[750,440],[90,560],[290,560],[500,560],[750,560]];
@@ -436,7 +436,7 @@ render();
 
 const royalId=12, hidden29=new Set([11,14,18]), mapPos29={0:[18,39],1:[40,29],2:[65,30],3:[86,36],4:[18,73],5:[40,71],6:[65,69],7:[87,79],8:[16,103],9:[35,101],10:[71,103],12:[51,120],13:[22,145],15:[80,145],16:[16,178],17:[39,178],19:[87,178]};
 const mapImg29='assets/game-29.jpg';
-OW.push({n:'Koruna',c:'#e9b847'});ico.f='🍞';ico.g='🪙';names21[4]='Dračí les';names21[6]='Dračí hrad';startPick21=0;
+OW.push({n:'Koruna',c:'#e9b847'});ico.f='🍞';ico.g='🪙';names21[4]='Lesní bašta';names21[6]='Železný brod';startPick21=0;
 function world29(start=false){return `<svg viewBox="0 0 1250 941" preserveAspectRatio="xMidYMid meet"><image href="${mapImg29}" width="1250" height="941"/>${Object.entries(mapPos29).map(([id,xy])=>{let i=+id,x=xy[0]*12.5/1,y=xy[1]*4.7;let chosen=start?i===startPick21:i===S.sel;return `<g role="button" tabindex="0" onclick="${start?(i===12?'royalInfo29()':`startPick21=${i};render()`):`mapAttack645(${i})`}"><title>${names21[i]}${i===12?' – královská pevnost':''}</title><rect x="${x-88}" y="${y-85}" width="176" height="95" rx="8" fill="transparent" stroke="transparent" stroke-width="0"/>${start&&chosen?`<path d="M${x-12} ${y-92}l12 12 12-12Z" fill="#ffe5a0" stroke="#48351d"/>`:''}${!start?`<circle cx="${x}" cy="${y-75}" r="${chosen?9:6}" fill="${col(S.pv[i].o)}" stroke="${chosen?'#ffe5a0':'#30291d'}" stroke-width="${chosen?2:1}"/>`:''}</g>`}).join('')}</svg>`}
 world21=world29;function royalInfo29(){alert('Korunní hrad nelze zvolit. Je to závěrečná královská pevnost.')}
 const start29=start21;start21=function(){if(startPick21===12||hidden29.has(startPick21))return;start29();let p=S.pv[12];p.o=3;p.cap20=5;p.hr=9;p.a={p:180,j:90,o:35};p.b=[{t:'hr',l:5,w:0,cn:0},{t:'kas',l:5,w:0,cn:0},...Array(10).fill(null)];for(let i of hidden29){S.pv[i].o=-2;S.pv[i].a=ea()}S.royal29=true;S.quest29=null;S.nextQuest29=10;render()};
@@ -471,3 +471,5 @@ const world648=world21;world21=function(start=false){let h=world648(start);retur
 
 /* 65.11: migrate display names in existing saved games without changing city IDs. */
 const renderNames6511=render;render=function(){if(S?.pv)for(const p of S.pv){if(names21[p.id])p.n=names21[p.id]}return renderNames6511()};
+
+const mapLabels6512={"1":[510,135,174],"4":[222,331,162],"5":[490,322,160],"6":[807,313,176],"10":[895,482,190],"15":[995,670,190],"17":[480,820,170],"19":[1070,820,170]};const worldLabels6512=world29;world29=function(start=false){let h=worldLabels6512(start);let a=Object.entries(mapLabels6512).map(([id,[x,y,w]])=>'<g pointer-events="none"><rect x="'+(x-w/2)+'" y="'+(y-14)+'" width="'+w+'" height="28" rx="3" fill="#17170f"/><text x="'+x+'" y="'+(y+6)+'" text-anchor="middle" fill="#fff0cf" font-family="Georgia,serif" font-size="21" font-weight="bold">'+names21[id]+'</text></g>').join('');return h.replace('</svg>',a+'</svg>')};world21=world29;
