@@ -265,7 +265,7 @@ window.addEventListener('resize',()=>{if(S)render()});render();
 // Fifth edition: independent atlas and construction catalogue.
 const realmNames=['Modrá koruna','Rudé císařství','Fialový řád'];OW.forEach((o,i)=>o.n=realmNames[i]);
 const xy=[[105,110],[310,80],[530,125],[755,90],[155,260],[355,235],[570,275],[790,245],[90,430],[300,400],[525,435],[740,410],[145,590],[365,565],[580,600],[790,565]];
-const fantasy=['Havraní věž','Stříbrný brod','Mlžný hrad','Rudá bašta','Dubový dvůr','Jantarov','Dračí průsmyk','Větrná stráž','Jezerní tvrz','Zlatý most','Měsíční údolí','Černá skála','Korunní hrad','Jelení les','Sluneční brána','Popelavá věž'];
+const fantasy=['Havraní věž','Stříbrný brod','Mlžný hrad','Rudá bašta','Dubový dvůr','Zlatá brána','Dračí průsmyk','Větrná stráž','Jezerní tvrz','Zlatý most','Černý kámen','Černá skála','Korunní hrad','Jelení les','Sluneční brána','Popelavá věž'];
 const init5=init;init=function(d){init5(d);S.pv.forEach((p,i)=>p.n=fantasy[i]);S.attacks=[];render()};
 function recordAttack(fr,to,a){if(fr.o===to.o||!tot(a))return;(S.attacks||=[]).push({from:fr.id,to:to.id,o:fr.o,n:tot(a),turn:S.t});S.attacks=S.attacks.slice(-12)}
 const battle5=battle;battle=function(fr,to,a){recordAttack(fr,to,a);return battle5(fr,to,a)};
@@ -383,7 +383,7 @@ const render20=render;render=function(){render20();if(!S)return;let top=$('top')
 
 const assets21={"city": "assets/game-24.webp", "logo": "assets/game-25.webp", "stone": "assets/game-26.webp", "cap": "assets/game-27.webp", "map": "assets/game-28.webp"};
 document.documentElement.style.setProperty('--city21',`url(${assets21.city})`);document.documentElement.style.setProperty('--stone21',`url(${assets21.stone})`);document.documentElement.style.setProperty('--map21',`url(${assets21.map})`);
-const names21=['Havraní přístav','Stříbrné hory','Mlžný průsmyk','Rudý přístav','Dubový les','Jantarov','Dračí brod','Větrný záliv','Jezerní tvrz','Zlatý most','Měsíční údolí','Černá skála','Korunní hrad','Jelení brod','Sluneční pláně','Popelavý přístav','Bílý útes','Zelené lány','Železná hora','Vinný dvůr'];
+const names21=['Havraní přístav','Skalní koruna','Mlžný průsmyk','Rudý přístav','Lesní bašta','Zlatá brána','Železný brod','Větrný záliv','Jezerní tvrz','Zlatý most','Černý kámen','Černá skála','Korunní hrad','Jelení brod','Zlaté pláně','Kovářský přístav','Bílý útes','Zelené lány','Železná hora','Sluneční vrch'];
 terrain20.push('pobřeží','pláně','hory','pláně');
 // A continuous world: coastal western and eastern shores, river through central valleys.
 const pos21=[[90,80],[290,80],[500,80],[730,80],[110,200],[290,200],[500,200],[750,200],[90,320],[290,320],[500,320],[750,320],[90,440],[290,440],[500,440],[750,440],[90,560],[290,560],[500,560],[750,560]];
@@ -468,3 +468,6 @@ function resolve647(){for(let p of S.pv){for(let m of [...(p.marches647||[])]){i
 const turn647=endTurn;endTurn=function(){if(!S)return;let t=S.t;turn647();if(S.t>t){resolve647();render()}}
 function arrows647(){let h='<defs><marker id="marchArrow647" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto"><path d="M0 0L7 3 0 6Z" fill="#eac66b"/></marker></defs>';for(let p of S.pv)for(let m of p.marches647||[]){if(m.owner!==0&&(m.returning||S.pv[m.to]?.o!==0))continue;let a=mapPos29[m.returning?m.to:m.from],b=mapPos29[m.returning?m.from:m.to];if(!a||!b)continue;let x=a[0]*12.5,y=a[1]*4.7-35,u=b[0]*12.5,v=b[1]*4.7-35,l=Math.hypot(u-x,v-y)||1,dx=(u-x)/l,dy=(v-y)/l;h+='<g pointer-events="none"><path d="M'+(x+dx*35)+' '+(y+dy*35)+' L'+(u-dx*35)+' '+(v-dy*35)+'" stroke="'+(m.returning?'#eac66b':'#f04c39')+'" stroke-width="8" stroke-dasharray="10 5" marker-end="url(#marchArrow647)"/><text x="'+((x+u)/2)+'" y="'+((y+v)/2-12)+'" text-anchor="middle" fill="#fff" stroke="#24180d" stroke-width="4" paint-order="stroke" font-size="18">'+(m.returning?'Návrat':m.owner===0?'Útok':(OW[m.owner]?.n||'Soupeř'))+' · '+Math.max(0,m.arrival-S.t)+' kol</text></g>'}return h}
 const world648=world21;world21=function(start=false){let h=world648(start);return start||!S?h:h.replace('</svg>',arrows647()+'</svg>')};
+
+/* 65.11: migrate display names in existing saved games without changing city IDs. */
+const renderNames6511=render;render=function(){if(S?.pv)for(const p of S.pv){if(names21[p.id])p.n=names21[p.id]}return renderNames6511()};
