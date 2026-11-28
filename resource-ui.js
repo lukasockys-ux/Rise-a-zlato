@@ -15,3 +15,10 @@ for(const [k,[dark,light]] of Object.entries(palette67)){let shape=k==='fish'?'<
 // 68.5 Uploaded commodity artwork; actual resource keys mapped to filenames.
 const resourceFiles685={f:'f',d:'d',k:'k',v:'v',s:'s',c:'c',grain:'grain',ore:'ore',fish:'fish',meat:'meat',hide:'hide',copperOre:'copperOre',goldOre:'goldOre',silverOre:'silverOre',salt:'salt',g:'g',i:'i',m:'m',z:'w',w:'w',l:'l',t:'cloth',a:'armor',h:'horse',flour:'flour',cu:'cu',steel:'steel',tools:'tools',bread:'bread'};
 for(const [k,file] of Object.entries(resourceFiles685)){if(!RN[k])continue;art30[k]='res-'+file+'.webp';labels30[k]=RN[k];ico[k]=pic31(k)}labels30.g='Mince';labels30.f='Jídlo';
+
+// 68.6 Remove dark rectangular backgrounds using alpha derived from border luminance.
+const clean685=new Map();const rawPic686=pic31;
+function cleanResource686(img){const src=img.getAttribute('src');if(!src||!/^res-.*\.webp$/.test(src))return;if(clean685.has(src)){img.src=clean685.get(src);return}const process=()=>{try{let c=document.createElement('canvas');c.width=img.naturalWidth;c.height=img.naturalHeight;if(!c.width)return;let x=c.getContext('2d');x.drawImage(img,0,0);let d=x.getImageData(0,0,c.width,c.height),a=d.data,w=c.width,h=c.height,seen=new Uint8Array(w*h),q=[];function add(i){if(i<0||i>=seen.length||seen[i])return;seen[i]=1;let j=i*4;if(Math.max(a[j],a[j+1],a[j+2])<=65){a[j+3]=0;q.push(i)}}for(let i=0;i<w;i++){add(i);add((h-1)*w+i)}for(let i=0;i<h;i++){add(i*w);add(i*w+w-1)}for(let n=0;n<q.length;n++){let i=q[n];if(i%w)add(i-1);if(i%w<w-1)add(i+1);add(i-w);add(i+w)}x.putImageData(d,0,0);let url=c.toDataURL('image/png');clean685.set(src,url);img.src=url}catch(e){console.warn('Resource artwork',e)}};if(img.complete)process();else img.addEventListener('load',process,{once:true})}
+art30.f='res-f.webp';art30.a='res-w.webp';ico.f=pic31('f');ico.a=pic31('a');
+function refreshArt686(){document.querySelectorAll('img.resIcon30').forEach(cleanResource686)}
+const render686=render;render=function(){render686();refreshArt686()};refreshArt686();
