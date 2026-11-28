@@ -442,7 +442,7 @@ let housing=cities.reduce((n,p)=>n+p.b.reduce((v,b)=>v+(b?.t==='dum'&&!b.cn?5*b.
 a.g=st.g;a.i=st.i;
 for(let p of cities){if(tot(p.a)<10)continue;let q=nb(p.id).map(i=>S.pv[i]).filter(q=>q.o!==k&&q.o>=-1&&!(q.o===0&&peace(k))).sort((x,y)=>est(x)-est(y))[0];if(q&&A_(p.a)*.85/Math.max(1,est(q))>=a.agg){let army=ea();for(let u in army){army[u]=F(p.a[u]*.85);p.a[u]-=army[u]}if(q.o===0)(S.inc=S.inc||[]).push({fr:p,to:q,s:army});else battle(p,q,army)}}
 };
-const end22=endTurn;endTurn=function(){if(S.ev||S.inc?.length){render();return;}end22();if(S.r.f>20&&S.md>=65&&housingFree()>0&&S.t%3===0){S.wk++;lg('Do říše se přistěhoval nový obyvatel.');render()}save22()};
+const end22=endTurn;endTurn=function(){if(S.ev||S.inc?.length){render();return;}end22();if(['f','grain','fish','meat','bread'].reduce((n,k)=>n+(S.r[k]||0),0)>20&&S.md>=65&&housingFree()>0&&S.t%3===0){S.wk++;lg('Do říše se přistěhoval nový obyvatel.');render()}save22()};
 render();
 
 const royalId=12, hidden29=new Set([11,14,18]), mapPos29={0:[18,39],1:[40,29],2:[65,30],3:[86,36],4:[18,73],5:[40,71],6:[65,69],7:[87,79],8:[16,103],9:[35,101],10:[71,103],12:[51,120],13:[22,145],15:[80,145],16:[16,178],17:[39,178],19:[87,178]};
