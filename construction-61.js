@@ -1,6 +1,6 @@
 /* Version 61: construction queue, isolated from existing game modules. */
 const capStart61=capup20;
-capup20=function(){let p=S.pv[S.sel];if(!p||p.o!==0||cap20(p)>=5)return;if(p.capJob61){render();return;}if(!ok(capcost20(p))){alert('Chybí suroviny pro vylepšení radnice.');return;}pay(capcost20(p));p.capJob61={left:2,total:2};save22();render()};
+capup20=function(){let p=S.pv[S.sel];if(!p||p.o!==0||cap20(p)>=5)return;if(p.capJob61){render();return;}if(capNeeds676(p,S.wk,S.classes51).length){alert('Chybí: '+capNeeds676(p,S.wk,S.classes51).join(', '));return;}if(!ok(capcost20(p))){alert('Chybí suroviny pro vylepšení radnice.');return;}pay(capcost20(p));p.capJob61={left:2,total:2};save22();render()};
 upg=function(i,j){let p=S.pv[i],b=p?.b[j];if(!b||p.o!==0||b.cn||b.job61)return;let kas=b.t==='kas',c=sc(BD[b.t].c,b.l);if(b.l>=(kas?5:3)||!ok(c)||(kas?cap20(p)<b.l+1:!upgradeAllowed675(p,b)))return;pay(c);b.job61={left:2,total:2};save22();render()};
 function progress61(left,total){return '<progress style="width:100%" max="'+total+'" value="'+(total-left)+'"></progress> '+Math.round(100*(total-left)/total)+' % · '+left+' kol';}
 const turn61=endTurn;
